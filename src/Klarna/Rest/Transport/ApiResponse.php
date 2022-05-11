@@ -143,6 +143,15 @@ class ApiResponse
      */
     public function getLocation()
     {
-        return empty($this->headers['Location']) ? null : $this->headers['Location'][0];
+        if (
+            empty($this->headers['Location'])
+            && !empty($this->headers['location'])
+        ) {
+            $this->headers['Location'] = [
+                $this->headers['location'][0]
+            ];
+        }
+
+        return !empty($this->headers['Location']) ? $this->headers['Location'][0] : null;
     }
 }
